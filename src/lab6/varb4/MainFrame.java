@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
     // Константы, задающие размер окна приложения, если оно
@@ -17,7 +18,7 @@ public class MainFrame extends JFrame {
     private static final int HEIGHT = 500;
     private JMenuItem pauseMenuItem;
     private JMenuItem resumeMenuItem;
-    private JMenuItem sandpaper;
+    private JCheckBoxMenuItem sandpaperMenuItem;
     // Поле, по которому прыгают мячи
     private Field field = new Field();
     // Конструктор главного окна приложения
@@ -54,11 +55,12 @@ public class MainFrame extends JFrame {
 
         Action sandpaper = new AbstractAction("Наждачная бумага"){
             public void actionPerformed(ActionEvent event) {
-                if (field.isSandpaperFlag() == true) field.setSandpaperFlag(false);
-                else field.setSandpaperFlag(true);
+                field.setSandpaperFlag(sandpaperMenuItem.isSelected());
             }
         };
-        controlMenu.add(sandpaper);
+        sandpaperMenuItem = new JCheckBoxMenuItem(sandpaper);
+        controlMenu.add(sandpaperMenuItem);
+        sandpaperMenuItem.setSelected(false);
         Action pauseAction = new AbstractAction("Приостановить движение"){
             public void actionPerformed(ActionEvent event) {
                 field.pause();
