@@ -17,6 +17,7 @@ public class MainFrame extends JFrame {
     private static final int HEIGHT = 500;
     private JMenuItem pauseMenuItem;
     private JMenuItem resumeMenuItem;
+    private JMenuItem sandpaper;
     // Поле, по которому прыгают мячи
     private Field field = new Field();
     // Конструктор главного окна приложения
@@ -50,6 +51,14 @@ public class MainFrame extends JFrame {
         ballMenu.add(addBallAction);
         JMenu controlMenu = new JMenu("Управление");
         menuBar.add(controlMenu);
+
+        Action sandpaper = new AbstractAction("Наждачная бумага"){
+            public void actionPerformed(ActionEvent event) {
+                if (field.isSandpaperFlag() == true) field.setSandpaperFlag(false);
+                else field.setSandpaperFlag(true);
+            }
+        };
+        controlMenu.add(sandpaper);
         Action pauseAction = new AbstractAction("Приостановить движение"){
             public void actionPerformed(ActionEvent event) {
                 field.pause();

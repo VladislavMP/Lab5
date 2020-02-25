@@ -13,6 +13,7 @@ public class BouncingBall implements Runnable {
     private Field field;
     private int radius;
     private Color color;
+    private int sandpaperRadius = 2;
     // Текущие координаты мяча
     private double x;
     private double y;
@@ -20,6 +21,7 @@ public class BouncingBall implements Runnable {
     private int speed;
     private double speedX;
     private double speedY;
+
     // Конструктор класса BouncingBall
     public BouncingBall(Field field) {
 // Необходимо иметь ссылку на поле, по которому прыгает мяч,
@@ -59,6 +61,11 @@ public class BouncingBall implements Runnable {
     }
     // Метод run() исполняется внутри потока. Когда он завершает работу,
 // то завершается и поток
+
+    public int getRadius() {
+        return radius;
+    }
+
     public void run() {
         try {
 // Крутим бесконечный цикл, т.е. пока нас не прервут,
@@ -73,26 +80,31 @@ public class BouncingBall implements Runnable {
 // Достигли левой стенки, отскакиваем право
                     speedX = -speedX;
                     x = radius;
+                    if (field.isSandpaperFlag() == true) radius = radius - sandpaperRadius;
                 } else
                 if (x + speedX >= field.getWidth() - radius) {
 // Достигли правой стенки, отскок влево
                     speedX = -speedX;
                     x=new Double(field.getWidth()-radius).intValue();
+                    if (field.isSandpaperFlag() == true) radius = radius - sandpaperRadius;
                 } else
                 if (y + speedY <= radius) {
 // Достигли верхней стенки
                     speedY = -speedY;
                     y = radius;
+                    if (field.isSandpaperFlag() == true) radius = radius - sandpaperRadius;
                 } else
                 if (y + speedY >= field.getHeight() - radius) {
 // Достигли нижней стенки
                     speedY = -speedY;
                     y=new Double(field.getHeight()-radius).intValue();
+                    if (field.isSandpaperFlag() == true) radius = radius - sandpaperRadius;
                 } else {
 // Просто смещаемся
                     x += speedX;
                     y += speedY;
                 }
+
 // Засыпаем на X миллисекунд, где X определяется
 // исходя из скорости
 // Скорость = 1 (медленно), засыпаем на 15 мс.

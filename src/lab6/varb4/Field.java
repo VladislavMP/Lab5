@@ -12,6 +12,7 @@ import javax.swing.Timer;
 public class Field extends JPanel {
     // Флаг приостановленности движения
     private boolean paused;
+    private boolean sandpaperFlag = false;
     // Динамический список скачущих мячей
     private ArrayList<BouncingBall> balls = new ArrayList<BouncingBall>(10);
     // Класс таймер отвечает за регулярную генерацию событий ActionEvent
@@ -20,6 +21,7 @@ public class Field extends JPanel {
     private Timer repaintTimer = new Timer(10, new ActionListener() {
         public void actionPerformed(ActionEvent ev) {
 // Задача обработчика события ActionEvent - перерисовка окна
+            balls.removeIf(ball -> (ball.getRadius() <= 0));
             repaint();
         }
     });
@@ -37,8 +39,15 @@ public class Field extends JPanel {
         Graphics2D canvas = (Graphics2D) g;
 // Последовательно запросить прорисовку от всех мячей из списка
         for (BouncingBall ball: balls) {
-            ball.paint(canvas);
+             ball.paint(canvas);
         }
+    }
+    public void setSandpaperFlag(boolean flag){
+        sandpaperFlag = flag;
+    }
+    public boolean isSandpaperFlag()
+    {
+        return sandpaperFlag;
     }
     // Метод добавления нового мяча в список
     public void addBall() {
