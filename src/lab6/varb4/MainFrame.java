@@ -1,5 +1,6 @@
 package lab6.varb4;
-
+import javax.swing.*;
+import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
+
+import static java.lang.Integer.parseInt;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
     // Константы, задающие размер окна приложения, если оно
@@ -19,6 +23,7 @@ public class MainFrame extends JFrame {
     private JMenuItem pauseMenuItem;
     private JMenuItem resumeMenuItem;
     private JCheckBoxMenuItem sandpaperMenuItem;
+
     // Поле, по которому прыгают мячи
     private Field field = new Field();
     // Конструктор главного окна приложения
@@ -53,6 +58,7 @@ public class MainFrame extends JFrame {
         JMenu controlMenu = new JMenu("Управление");
         menuBar.add(controlMenu);
 
+
         Action sandpaper = new AbstractAction("Наждачная бумага"){
             public void actionPerformed(ActionEvent event) {
                 field.setSandpaperFlag(sandpaperMenuItem.isSelected());
@@ -61,6 +67,21 @@ public class MainFrame extends JFrame {
         sandpaperMenuItem = new JCheckBoxMenuItem(sandpaper);
         controlMenu.add(sandpaperMenuItem);
         sandpaperMenuItem.setSelected(false);
+
+        sandpaperMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {try{if (sandpaperMenuItem.getState() == true){
+                String result = JOptionPane.showInputDialog(
+                        MainFrame.this,
+                        "Введите целое X");
+                BouncingBall.setSandpaperRadius(parseInt(result));
+            }
+            }
+          catch (NumberFormatException ex)
+            { JOptionPane.showMessageDialog(MainFrame.this,
+                    "Ошибка в формате записи числа", "" +
+                            "Ошибочный формат числа", JOptionPane.WARNING_MESSAGE);
+            }}
+        });
         Action pauseAction = new AbstractAction("Приостановить движение"){
             public void actionPerformed(ActionEvent event) {
                 field.pause();

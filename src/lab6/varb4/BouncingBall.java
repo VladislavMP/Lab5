@@ -13,7 +13,7 @@ public class BouncingBall implements Runnable {
     private Field field;
     private int radius;
     private Color color;
-    private int sandpaperRadius = 2;
+    private static int sandpaperRadius = 2;
     // Текущие координаты мяча
     private double x;
     private double y;
@@ -64,6 +64,9 @@ public class BouncingBall implements Runnable {
 
     public int getRadius() {
         return radius;
+    }
+    public static void setSandpaperRadius(int x) {
+        sandpaperRadius = x;
     }
 
     public void run() {
